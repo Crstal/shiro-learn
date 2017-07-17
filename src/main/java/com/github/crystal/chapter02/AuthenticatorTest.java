@@ -8,6 +8,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AuthenticatorTest {
@@ -34,7 +35,7 @@ public class AuthenticatorTest {
 	  
 	    //得到一个身份集合，其包含了Realm验证成功的身份信息  
 	    PrincipalCollection principalCollection = subject.getPrincipals();  
-	    System.out.println(principalCollection);
+	    Assert.assertEquals(2, principalCollection.asList().size());  
 	}
 	
 	@Test(expected = UnknownAccountException.class)  
