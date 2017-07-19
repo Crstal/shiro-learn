@@ -1,5 +1,8 @@
 package com.github.crystal.chapter06.realm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -42,7 +45,10 @@ public class UserRealm extends AuthorizingRealm {
             throw new LockedAccountException(); //帐号锁定  
         }  
 		//交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以在此判断或自定义实现
-		SimpleAuthenticationInfo simple = new SimpleAuthenticationInfo(username, user.getPassword(), 
+		List<Object> principals = new ArrayList<Object>();
+		principals.add(user.getUsername());
+		principals.add(user);
+		SimpleAuthenticationInfo simple = new SimpleAuthenticationInfo(principals, user.getPassword(), 
 				ByteSource.Util.bytes(user.getCredentialsSalt()),//salt=username+sal
 		getName());
 		return simple;
